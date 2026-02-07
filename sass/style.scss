@@ -194,7 +194,7 @@ html,body {
     left: 0;
     z-index: 1;
 
-    background: linear-gradient(to bottom, $color-sky, #FFF 40%);
+    background: linear-gradient(to bottom, $color-sky, #FFF 60%);
 
     @include mq(sp-H) {
         display: none;
@@ -1406,6 +1406,33 @@ html,body {
     }
 }
 
+.section__main-top-image {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 50px;
+
+    @include mq(pc-M) {
+        padding-bottom: 30px;
+    }
+
+    @include mq(tab-H) {
+        padding-bottom: 25px;
+    }
+
+    @include mq(tab-M) {
+        padding-bottom: 50px;
+    }
+
+    @include mq(sp-M) {
+        padding-bottom: 30px;
+    }
+
+    @include mq(sp-L) {
+        padding-bottom: 25px;
+    }
+}
+
 .main-body-title {
     position: relative;
     margin-left: auto;
@@ -1952,6 +1979,31 @@ html,body {
     @include mq(sp-L) {
         padding-bottom: 25px;
         margin-bottom: 20px;
+    }
+}
+
+// present
+.main-present-content {
+    padding-top: 60px;
+
+    @include mq(pc-M) {
+        padding-top: 40px;
+    }
+
+    @include mq(tab-H) {
+        padding-top: 20px;
+    }
+
+    @include mq(tab-M) {
+        padding-top: 50px;
+    }
+
+    @include mq(sp-M) {
+        padding-top: 40px;
+    }
+
+    @include mq(sp-L) {
+        padding-top: 20px;
     }
 }
 
