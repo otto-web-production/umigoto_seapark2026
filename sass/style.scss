@@ -1493,40 +1493,40 @@ html,body {
     text-align: center;
     font-weight: 500;
     line-height: 1.8em;
-    font-size: 24px;
+    font-size: 26px;
     padding-left: 30px;
     padding-right: 30px;
 
     @include mq(pc-M) {
-        font-size: 17px;
+        font-size: 19px;
         padding-left: 20px;
         padding-right: 20px;
     }
 
     @include mq(tab-H) {
-        font-size: 13px;
+        font-size: 15px;
     }
 
     @include mq(tab-M) {
-        font-size: 24px;
+        font-size: 26px;
         padding-left: 30px;
         padding-right: 30px;
     }
 
     @include mq(sp-H) {
-        font-size: 21px;
+        font-size: 23px;
         padding-left: 25px;
         padding-right: 25px;
     }
 
     @include mq(sp-M) {
-        font-size: 17px;
+        font-size: 19px;
         padding-left: 20px;
         padding-right: 20px;
     }
 
     @include mq(sp-L) {
-        font-size: 13px;
+        font-size: 15px;
     }
 }
 
@@ -1955,37 +1955,6 @@ html,body {
     }
 }
 
-.main-seventh-text-bottom {
-    display: flex;
-    justify-content: space-around;
-    text-align: center;
-    font-size: 20px;
-
-    @include mq(pc-M) {
-        font-size: 14px;
-    }
-    
-    @include mq(tab-H) {
-        font-size: 10px;
-    }
-
-    @include mq(tab-M) {
-        font-size: 20px;
-    }
-
-    @include mq(sp-H) {
-        font-size: 18px;
-    }
-
-    @include mq(sp-M) {
-        font-size: 14px;
-    }
-    
-    @include mq(sp-L) {
-        font-size: 10px;
-    }
-}
-
 // about
 .section__about {
     background: $color-sky;
@@ -2044,7 +2013,7 @@ html,body {
 }
 
 .about-text {
-    line-height: 1.6em;
+    line-height: 1.8em;
     font-weight: 400;
     font-size: 24px;
     margin: 50px 40px;
