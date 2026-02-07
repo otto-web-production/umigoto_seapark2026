@@ -1,0 +1,3793 @@
+@charset "UTF-8";
+@use "sass:map";
+
+//色
+$color-blue: #0E539C;
+$color-lightblue: #549FEB;
+$color-red: #E80000;
+$color-yellow: #FFF050;
+$color-sky: #DDEEFF;
+$color-green: #42CAA1;
+$color-gray: #505C70;
+
+
+
+
+//フォント
+$font-base: "Noto Sans JP", sans-serif;
+$font-adbe: "ADS-akari", sans-serif;
+
+//レイアウト
+$breakpoints: (
+    "mini":"(max-width: 320px)", //280px~320px
+    "sp-L":"(max-width: 400px)", //321px~400px
+    "sp-M":"(max-width: 560px)", //SP=410px 401px~560px
+    "sp-H":"(max-width: 700px)", //561px~700px
+    "tab-L":"(max-width: 850px)", //701px~850px
+    "tab-M":"(max-width: 1000px)", //851px~1000px
+    "tab-H":"(max-width: 1240px)", //1001px~1240px
+    "pc-up":"(min-width: 1241px)",
+    "pc-L":"(max-width: 1440px)", //1241px~1440px
+    "pc-M-up":"(min-width: 1441px)",
+    "pc-M":"(max-width: 1650px)", //1441px~1650px
+    "pc-H":"(max-width: 1900px)", //1651px~1900px
+    "monitor":"(min-width: 1901px)", //1901px~
+);
+
+//メディアクエリ
+@mixin mq($breakpoint: "sp-M") {
+  @media #{map.get($breakpoints, $breakpoint)} {
+    @content;
+  }
+}
+
+/* リセットCSS
+===================================== */
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, button, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+
+html {
+    line-height: 1;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+li, dd {
+    list-style-type: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+caption, th, td {
+    font-weight: normal;
+    text-align: left;
+    vertical-align: middle;
+}
+
+q, blockquote {
+    quotes: none;
+  }
+
+q {
+    &:before, &:after {
+      content: "";
+      content: none;
+    }
+}
+
+blockquote {
+    &:before, &:after {
+      content: "";
+      content: none;
+    }
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+    display: block;
+}
+
+img {
+    border: none;
+    vertical-align: bottom;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+ul,ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    padding: 0;
+    margin: 0;
+}
+
+p {
+    margin: 0;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+// 基本設定
+*,*::before,*::after {
+    box-sizing: border-box;
+}
+
+html,body {
+    padding: 0;
+    margin: 0;
+    font-family: $font-base;
+}
+
+.f-a {
+    font-family: $font-adbe;
+}
+
+.section-title,
+.main-body-title {
+    font-family: $font-adbe;
+    line-height: 1.8em;
+    text-align: center;
+    color: $color-blue;
+    font-size: 25px;
+
+    @include mq(pc-M) {
+        font-size: 22px;
+    }
+
+    @include mq(tab-H) {
+        font-size: 18px;
+    }
+
+    @include mq(tab-M) {
+        font-size: 30px;
+    }
+
+    @include mq(sp-H) {
+        font-size: 25px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 22px;
+    }
+    
+    @include mq(sp-L) {
+        font-size: 18px;
+    }
+} 
+
+.text-red {
+    color: $color-red;
+}
+
+.section__lead {
+    background: linear-gradient(to bottom, $color-blue, $color-lightblue);
+}
+
+
+.pc-content {
+    display: block;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 1;
+
+    background: linear-gradient(to bottom, $color-sky, #FFF 40%);
+
+    @include mq(sp-H) {
+        display: none;
+    }
+}
+
+.pc-left {
+    font-family: $font-adbe;
+    color: $color-blue;
+    position: fixed;
+    left: calc(50% - 780px);
+    top: 100px;
+    font-size: 24px;
+    line-height: 1.8em;
+
+    @include mq(pc-M) {
+        font-size: 18px;
+        top: 60px;
+        left: calc(50% - 610px);
+    }
+
+    @include mq(tab-H) {
+        font-size: 14px;
+        top: 40px;
+        left: calc(50% - 450px);
+    }
+
+    @include mq(tab-M) {
+        display: none;
+    }
+}
+
+.pc-right {
+    position: fixed;
+    right: calc(50% - 800px);
+    top: 100px;
+
+    @include mq(pc-M) {
+        top: 60px;
+        right: calc(50% - 600px);
+    }
+
+    @include mq(tab-H) {
+        top: 40px;
+        right: calc(50% - 480px);
+    }
+
+    @include mq(tab-M) {
+        display: none;
+    }
+}
+
+.pc-right-logo {
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+
+    @include mq(pc-M) {
+        width: 220px;
+    }
+
+    @include mq(tab-H) {
+        width: 160px;
+    }
+}
+
+.pc-right-title {
+    width: 400px;
+    margin-top: 60px;
+
+    @include mq(pc-M) {
+        width: 280px;
+        margin-top: 40px;
+    }
+
+    @include mq(tab-H) {
+        width: 240px;
+        margin-top: 30px;
+    }
+}
+
+.pc__bg {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    bottom: 0;
+    left: 0;
+}
+
+
+// homepage本体
+.hp-body {
+    overflow-x: hidden;
+    max-width: 700px;
+    position: relative;
+    z-index: 3;
+    margin-left: auto;
+    margin-right: auto;
+    background: #FFF;
+    border-left: 20px solid #fff;
+    border-right: 20px solid #fff;
+
+    @include mq(pc-M) {
+        max-width: 560px;
+    }
+
+    @include mq(tab-H) {
+        max-width: 400px;
+        border-left: 10px solid #fff;
+        border-right: 10px solid #fff;
+    }
+
+    @include mq(tab-M) {
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    @include mq(sp-H) {
+        border: none;
+    }
+}
+
+
+.body-menu {
+    position: fixed;
+    z-index: 100;
+    display: none;
+
+    @include mq(tab-M) {
+        display: block;
+    }
+
+    @include mq(tab-M) {
+        width: 80px;
+        height: 80px;
+        top: 20px;
+        left: 40px;
+    }
+
+    @include mq(sp-M) {
+        width: 60px;
+        height: 60px;
+        top: 15px;
+        left: 30px;
+    }
+
+    @include mq(sp-L) {
+        width: 40px;
+        height: 40px;
+        top: 15px;
+        left: 15px;
+    }
+}
+
+.drawer-icon {
+    display: block;
+
+    &.is-active {
+        display: none;
+    }
+}
+
+.drawer-icon__bars {
+    display: none;
+    top: 0;
+    left: 0;
+    background: $color-gray;
+    border-radius: 100%;
+    position: relative;
+
+    @include mq(tab-M) {
+        width: 80px;
+        height: 80px;
+    }
+
+    @include mq(sp-M) {
+        width: 60px;
+        height: 60px;
+    }
+    
+    @include mq(sp-L) {
+        width: 40px;
+        height: 40px;
+    }
+
+    &.is-active {
+        display: block;
+    }
+}
+
+.drawer-icon__bar1 {
+    position: absolute;
+    left: 50%;
+    background: #FFF;
+    transform: rotate(45deg);
+
+    @include mq(tab-M) {
+        top: 20px;
+        width: 4px;
+        height: 40px;
+    }
+
+    @include mq(sp-M) {
+        top: 15px;
+        width: 3px;
+        height: 30px;
+    }
+
+    @include mq(sp-L) {
+        top: 10px;
+        width: 2px;
+        height: 20px;
+    }
+}
+
+.drawer-icon__bar2 {
+    position: absolute;
+    left: 50%;
+    background: #FFF;
+    transform: rotate(-45deg);
+
+    @include mq(tab-M) {
+        top: 20px;
+        width: 4px;
+        height: 40px;
+    }
+
+    @include mq(sp-M) {
+        top: 15px;
+        width: 3px;
+        height: 30px;
+    }
+
+    @include mq(sp-L) {
+        top: 10px;
+        width: 2px;
+        height: 20px;
+    }
+}
+
+.drawer-content {
+    font-family: $font-adbe;
+    text-align: center;
+    color: $color-blue;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: #FFF;
+    transform: translateX(-105%);
+    transition: transform 0.5s ease 0s;
+    z-index: 99;
+    display: none;
+    overflow-x: scroll;
+
+    &.is-active {
+        transform: translateX(0);
+    }
+
+    @include mq(tab-M) {
+        display: block;
+        font-size: 24px;
+        padding: 40px 80px 0;
+        line-height: 1.8em;
+    }
+
+    @include mq(sp-H) {
+        font-size: 22px;
+        padding: 120px 40px 0px;
+
+    }
+
+    @include mq(sp-M) {
+        font-size: 18px;
+        padding: 80px 30px 0px;
+    }
+
+    @include mq(sp-L) {
+        font-size: 14px;
+        padding: 60px 20px 0px;
+        line-height: 1.6em;
+    }
+}
+
+.drawer__nav-list {
+    position: relative;
+    z-index: 101;
+}
+
+.drawer-insta {
+    position: relative;
+    z-index: 101;
+}
+
+.drawer-insta-link {
+    display: flex;
+    justify-content: center;
+    padding: 10px 40px;
+    border: 2px solid $color-blue;
+    border-radius: 15px;
+    background: #FFF;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 60px;
+    max-width: 500px;
+
+    @include mq(pc-M) {
+        margin-top: 30px;
+        max-width: 320px;
+    }
+
+    @include mq(tab-H) {
+        margin-top: 20px;
+        max-width: 250px;
+    }
+
+    @include mq(tab-M) {
+        margin-top: 60px;
+        max-width: 500px;
+    }
+
+    @include mq(sp-H) {
+        margin-top: 40px;
+        max-width: 400px;
+    }
+
+    @include mq(sp-M) {
+        margin-top: 30px;
+        max-width: 320px;
+    }
+
+    @include mq(sp-L) {
+        margin-top: 20px;
+        max-width: 250px;
+    }
+}
+
+.drawer-insta-icon {
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+
+    @include mq(pc-M) {
+        width: 40px;
+        height: 40px;
+        margin-right: 15px;
+    }
+
+    @include mq(tab-H) {
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+    }
+
+    @include mq(tab-M) {
+        width: 50px;
+        height: 50px;
+        margin-right: 20px;
+    }
+
+    @include mq(sp-M) {
+        width: 40px;
+        height: 40px;
+        margin-right: 15px;
+    }
+
+    @include mq(sp-L) {
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+    }
+}
+
+.drawer-insta-text {
+    height: 50px;
+    line-height: 50px;
+    
+    @include mq(pc-M) {
+        height: 40px;
+        line-height: 40px;
+    }
+    
+    @include mq(tab-H) {
+        height: 30px;
+        line-height: 30px;
+    }
+
+    @include mq(tab-M) {
+        height: 50px;
+        line-height: 50px;
+    }
+    
+    @include mq(sp-M) {
+        height: 40px;
+        line-height: 40px;
+    }
+    
+    @include mq(sp-L) {
+        height: 30px;
+        line-height: 30px;
+    }
+}
+
+.drawer-content-bg {
+    width: calc(100% + 40px);
+    margin-left: -20px;
+    margin-top: -80px;
+    position: relative;
+    z-index: 100;
+
+    @include mq(tab-M) {
+        width: calc(100% + 160px);
+        margin-left: -80px;
+    }
+
+    @include mq(sp-H) {
+        width: calc(100% + 80px);
+        margin-left: -40px;
+    }
+    
+    @include mq(sp-M) {
+        width: calc(100% + 60px);
+        margin-left: -30px;
+    }
+
+    @include mq(sp-L) {
+        width: calc(100% + 40px);
+        margin-left: -20px;
+    }
+}
+
+
+//section__top
+.section__top {
+    position: relative;
+    z-index: 4;
+}
+
+.top-logo {
+    width: 240px;
+    margin-top: 50px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+
+    @include mq(pc-M) {
+        width: 200px;
+    }
+
+    @include mq(tab-H) {
+        width: 170px;
+        margin-top: 30px;
+    }
+
+    @include mq(tab-M) {
+        margin-top: 50px;
+        width: 240px;
+    }
+
+    @include mq(sp-M) {
+        width: 200px;
+    }
+
+    @include mq(sp-L) {
+        margin-top: 30px;
+        width: 170px;
+    }
+}
+
+.top-title {
+    margin-top: 40px;
+    width: 400px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+
+    @include mq(pc-M) {
+        width: 340px;
+    }
+
+    @include mq(tab-H) {
+        margin-top: 30px;
+        width: 270px;
+    }
+
+    @include mq(tab-M) {
+        margin-top: 40px;
+        width: 400px;
+    }
+
+    @include mq(sp-M) {
+        width: 340px;
+    }
+
+    @include mq(sp-L) {
+        margin-top: 30px;
+        width: 270px;
+    }
+}
+
+.top-schedule {
+    margin-top: 30px;
+    width: 340px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+
+    @include mq(pc-M) {
+        width: 300px;
+    }
+
+    @include mq(tab-H) {
+        width: 230px;
+    }
+
+    @include mq(tab-M) {
+        margin-top: 30px;
+        width: 340px;
+    }
+
+    @include mq(sp-M) {
+        width: 300px;
+    }
+
+    @include mq(sp-L) {
+        width: 230px;
+    }
+}
+
+.top-place {
+    line-height: 2em;
+    text-align: center;
+    font-size: 24px;
+
+    @include mq(pc-M) {
+        font-size: 19px;
+    }
+
+    @include mq(tab-H) {
+        font-size: 15px;
+    }
+
+    @include mq(tab-M) {
+        font-size: 24px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 19px;
+    }
+
+    @include mq(sp-L) {
+        font-size: 15px;
+    }
+}
+
+// lead
+.section__lead {
+    position: relative;
+    margin-top: 140px;
+
+    @include mq(pc-M) {
+        margin-top: 100px;
+    }
+
+    @include mq(tab-M) {
+        margin-top: 140px;
+    }
+
+    @include mq(sp-M) {
+        margin-top: 100px;
+    }
+}
+
+.section__lead-top {
+    height: 480px;
+
+    @include mq(pc-M) {
+        height: 300px;
+    }
+
+    @include mq(tab-H) {
+        height: 220px;
+    }
+
+    @include mq(tab-M) {
+        height: 480px;
+    }
+
+    @include mq(sp-H) {
+        height: 400px;
+    }
+
+    @include mq(sp-M) {
+        height: 300px;
+    }
+
+    @include mq(sp-L) {
+        height: 220px;
+    }
+
+    @include mq(mini) {
+        height: 190px;
+    }
+}
+
+.lead-bg {
+    width: 100%;
+    position: absolute;
+    top: -80px;
+    z-index: 1;
+}
+
+.lead-top-message {
+    position: relative;
+    z-index: 2;
+}
+
+.lead-top-message-bg {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: calc(100% - 80px);
+    top: -100px;
+
+    @include mq(pc-M) {
+        width: calc(100% - 30px);
+        max-width: 420px;
+        top: -80px;
+    }
+
+    @include mq(tab-H) {
+        width: calc(100% - 10px);
+        max-width: 340px;
+    }
+
+    @include mq(tab-M) {
+        width: calc(100% - 80px);
+        top: -100px;
+        max-width: 580px;
+    }
+
+    @include mq(sp-H) {
+        width: calc(100% - 50px);
+        max-width: 540px;
+    }
+
+    @include mq(sp-M) {
+        width: calc(100% - 30px);
+        max-width: 420px;
+        top: -80px;
+    }
+
+    @include mq(sp-L) {
+        width: calc(100% - 10px);
+        max-width: 340px;
+    }
+}
+
+.lead-top-message-text {
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    line-height: 1.5em;
+    letter-spacing: 0.2em;
+    text-align: center;
+    width: calc(100% - 80px);
+    font-size: 40px;
+
+    @include mq(pc-M) {
+        width: calc(100% - 30px);
+        font-size: 27px;
+    }
+
+    @include mq(tab-H) {
+        width: calc(100% - 10px);
+        font-size: 23px;
+    }
+
+    @include mq(tab-M) {
+        width: calc(100% - 80px);
+        font-size: 40px;
+    }
+
+    @include mq(sp-H) {
+        width: calc(100% - 50px);
+        font-size: 34px;
+    }
+
+    @include mq(sp-M) {
+        width: calc(100% - 30px);
+        font-size: 27px;
+    }
+
+    @include mq(sp-L) {
+        width: calc(100% - 10px);
+        font-size: 23px;
+    }
+}
+
+.lead-top-message-item {
+    position: absolute;
+    right: 96px;
+    bottom: 62px;
+    width: 120px;
+    height: auto;
+
+    @include mq(pc-M) {
+        right: 67px;
+        bottom: 52px;
+        width: 80px;
+        height: auto;
+    }
+
+    @include mq(tab-H) {
+        width: 60px;
+        height: auto;
+    }
+
+    @include mq(tab-M) {
+        right: 96px;
+        bottom: 62px;
+        width: 120px;
+        height: auto;
+    }
+
+    @include mq(sp-M) {
+        right: 67px;
+        bottom: 52px;
+        width: 80px;
+        height: auto;
+    }
+
+    @include mq(sp-L) {
+        width: 60px;
+        height: auto;
+    }
+}
+
+.lead-girl-right {
+    position: absolute;
+    height: auto;
+    z-index: 2;
+    width: 30%;
+    top: -260px;
+    right: 60px;
+    
+    @include mq(pc-M) {
+        top: -200px;
+        right: 15px;
+    }
+
+    @include mq(tab-H) {
+        top: -160px;
+    }
+
+    @include mq(tab-M) {
+        width: 30%;
+        top: -260px;
+        right: 60px;
+    }
+
+    @include mq(sp-H) {
+        width: 30%;
+        right: 20px;
+    }
+
+    @include mq(sp-M) {
+        top: -200px;
+        right: 15px;
+    }
+
+    @include mq(sp-L) {
+        top: -160px;
+    }
+}
+
+.lead-girl-left {
+    position: absolute;
+    height: auto;
+    transform: rotate(-10deg);
+    z-index: 2;
+    width: 24%;
+    top: -270px;
+    left: 50px;
+
+    @include mq(pc-M) {
+        top: -200px;
+        left: 15px;
+    }
+
+    @include mq(tab-H) {
+        top: -160px;
+    }
+
+    @include mq(tab-M) {
+        top: -270px;
+        left: 50px;
+    }
+
+    @include mq(sp-H) {
+        top: -245px;
+        left: 20px;
+    }
+
+    @include mq(sp-M) {
+        top: -200px;
+        left: 15px;
+    }
+
+    @include mq(sp-L) {
+        top: -160px;
+    }
+}
+
+
+.lead-sub-message, .lead-bottom-message {
+    color: #fff;
+    text-align: center;
+    line-height: 1.8em;
+    font-size: 25px;
+
+    @include mq(pc-M) {
+        font-size: 18px;
+    }
+
+    @include mq(tab-H) {
+        font-size: 14px;
+    }
+
+    @include mq(tab-M) {
+        font-size: 25px;
+    }
+
+    @include mq(sp-H) {
+        font-size: 22px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 18px;
+    }
+
+    @include mq(sp-L) {
+        font-size: 14px;
+    }
+}
+
+.lead-sub-message {
+    margin-top: 40px;
+}
+
+.lead-sub-message-top {
+    margin-bottom: 2em;
+}
+
+.lead-image-first {
+    width: 460px;
+    height: 460px;
+    margin-left: calc(100% - 420px);
+    margin-top: 60px;
+
+    @include mq(pc-M) {
+        width: 280px;
+        height: 280px;
+        margin-left: calc(100% - 260px);
+        margin-top: 30px;
+    }
+
+    @include mq(tab-H) {
+        width: 220px;
+        height: 220px;
+        margin-left: calc(100% - 185px);
+    }
+
+    @include mq(tab-M) {
+        width: 460px;
+        height: 460px;
+        margin-left: calc(100% - 420px);
+        margin-top: 60px;
+    }
+
+    @include mq(sp-H) {
+        width: 360px;
+        height: 360px;
+        margin-left: calc(100% - 330px);
+        margin-top: 40px;
+    }
+
+    @include mq(sp-M) {
+        width: 280px;
+        height: 280px;
+        margin-left: calc(100% - 260px);
+        margin-top: 30px;
+    }
+
+    @include mq(sp-L) {
+        width: 220px;
+        height: 220px;
+        margin-left: calc(100% - 185px);
+    }
+
+    @include mq(mini) {
+        width: 190px;
+        height: 190px;
+        margin-left: calc(100% - 175px);
+    }
+}
+
+.lead-image-second {
+    height: auto;
+    width: 420px;
+    margin-top: -40px;
+
+    @include mq(pc-M) {
+        width: 260px;
+        margin-top: 0px;
+    }
+
+    @include mq(tab-H) {
+        width: 200px;
+        margin-top: -20px;
+    }
+
+    @include mq(tab-M) {
+        width: 420px;
+        margin-top: -40px;
+    }
+
+    @include mq(sp-H) {
+        width: 320px;
+        margin-top: -60px;
+    }
+
+    @include mq(sp-M) {
+        width: 260px;
+        margin-top: 0px;
+    }
+
+    @include mq(sp-L) {
+        width: 200px;
+        margin-top: -20px;
+    }
+
+    @include mq(mini) {
+        width: 160px;
+    }
+}
+
+.lead-image-third {
+    width: 100%;
+    margin-top: -460px;
+
+    @include mq(pc-M) {
+        margin-top: -300px;
+    }
+
+    @include mq(tab-H) {
+        margin-top: -240px;
+    }
+
+    @include mq(tab-M) {
+        margin-top: -460px;
+    }
+
+    @include mq(sp-H) {
+        margin-top: -400px;
+    }
+
+    @include mq(sp-M) {
+        margin-top: -300px;
+    }
+
+    @include mq(sp-L) {
+        margin-top: -240px;
+    }
+
+    @include mq(mini) {
+        margin-top: -200px;
+    }
+}
+
+.lead-image-fourth {
+    width: 460px;
+    margin-left: calc(100% - 500px);
+    margin-top: -360px;
+
+    @include mq(pc-M) {
+        width: 280px;
+        margin-left: calc(100% - 300px);
+        margin-top: -250px;
+    }
+
+    @include mq(tab-H) {
+        width: 240px;
+        margin-left: calc(100% - 260px);
+        margin-top: -180px;
+    }
+
+    @include mq(tab-M) {
+        width: 460px;
+        margin-left: calc(100% - 500px);
+        margin-top: -360px;
+    }
+
+    @include mq(sp-H) {
+        width: 380px;
+        margin-left: calc(100% - 400px);
+        margin-top: -300px;
+    }
+
+    @include mq(sp-M) {
+        width: 280px;
+        margin-left: calc(100% - 300px);
+        margin-top: -250px;
+    }
+
+    @include mq(sp-L) {
+        width: 240px;
+        margin-left: calc(100% - 260px);
+        margin-top: -180px;
+    }
+
+    @include mq(mini) {
+        width: 190px;
+        margin-left: calc(100% - 200px);
+        margin-top: -160px;
+    }
+}
+
+.lead-bottom-message {
+    margin-top: 60px;
+    margin-left: 30px;
+    margin-right: 30px;
+
+    @include mq(pc-M) {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    @include mq(tab-H) {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    @include mq(tab-M) {
+        margin-top: 60px;
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+
+    @include mq(sp-H) {
+        margin-left: 15px;
+        margin-right: 15px;
+        margin-top: 30px;
+    }
+
+    @include mq(sp-M) {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    @include mq(sp-L) {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+}
+
+.lead-bottom-message-bottom {
+    margin-top: 2em;
+    padding-bottom: 120px;
+
+    @include mq(pc-M) {
+        padding-bottom: 60px;
+    }
+
+    @include mq(tab-H) {
+       padding-bottom: 45px;
+    }
+
+    @include mq(tab-M) {
+        padding-bottom: 120px;
+    }
+
+    @include mq(sp-H) {
+        padding-bottom: 80px;
+    }
+
+    @include mq(sp-M) {
+        padding-bottom: 60px;
+    }
+
+    @include mq(sp-L) {
+       padding-bottom: 45px;
+    }
+}
+
+// map
+.section__map {
+    background: #fff;
+    padding: 60px 40px 50px;
+
+    @include mq(pc-M) {
+        padding: 40px 25px 30px;
+    }
+
+    @include mq(tab-H) {
+        padding: 35px 20px 25px;
+    }
+
+    @include mq(tab-M) {
+        padding: 60px 40px 50px;
+    }
+
+    @include mq(sp-M) {
+        padding: 40px 25px 30px;
+    }
+
+    @include mq(sp-L) {
+        padding: 35px 20px 25px;
+    }
+}
+
+.map-btn {
+    width: 100%;
+    text-align: center;
+}
+
+.map-btn-link{
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: $color-green;
+    color: #fff;
+    border-radius: 10px;
+    letter-spacing: 0.3em;
+    font-size: 24px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    transition: background-color 0.15s ease;
+
+    @include mq(pc-M) {
+        font-size: 19px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    @include mq(tab-H) {
+        font-size: 15px;    
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    @include mq(tab-M) {
+        font-size: 24px;
+        padding-top: 25px;
+        padding-bottom: 25px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 19px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    @include mq(sp-L) {
+        font-size: 15px;    
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+}
+
+@media (hover: hover) {
+  .map-btn-link:hover {
+    background: darken($color-green, 10%);
+  }
+}
+
+.map-btn-link:active {
+  background: $color-gray;
+}
+
+// main
+.main-body {
+    background: $color-blue;
+    margin-top: -2px;
+    padding: 60px 40px 50px;
+
+    @include mq(pc-M) {
+        padding: 40px 25px 30px;
+    }
+
+    @include mq(tab-H) {
+        padding: 35px 20px 25px;
+    }
+
+    @include mq(tab-M) {
+        padding: 60px 40px 50px;
+    }
+
+    @include mq(sp-M) {
+        padding: 40px 25px 30px;
+    }
+
+    @include mq(sp-L) {
+        padding: 35px 20px 25px;
+    }
+}
+
+.main-body-title {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    background: #FFF;
+    border-radius: 50px;
+    width: calc(100% - 160px);
+    min-width: 360px;
+
+    @include mq(pc-M) {
+        width: calc(100% - 100px);
+        min-width: 320px;
+    }
+
+    @include mq(tab-H) {
+        width: calc(100% - 40px);
+        min-width: 240px;
+    }
+
+    @include mq(tab-M) {
+        width: calc(100% - 160px);
+        min-width: 360px;
+    }
+
+    @include mq(sp-M) {
+        width: calc(100% - 100px);
+        min-width: 320px;
+    }
+
+    @include mq(sp-L) {
+        width: calc(100% - 40px);
+        min-width: 240px;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        border-radius: 50px;
+        border: 2px solid $color-blue;
+        pointer-events: none;
+    }
+}
+
+.main-body-content {
+    background: #fff;
+    border-radius: 10px;
+    padding-top: 80px;
+    margin-top: -30px;
+    padding-bottom: 50px;
+
+    @include mq(pc-M) {
+        padding-top: 60px;
+        margin-top: -20px;
+        padding-bottom: 40px;
+    }
+
+    @include mq(tab-H) {
+        padding-top: 40px;
+        margin-top: -20px;
+        padding-bottom: 30px;
+    }
+
+    @include mq(tab-M) {
+        padding-top: 80px;
+        margin-top: -30px;
+        padding-bottom: 50px;
+    }
+
+    @include mq(sp-M) {
+        padding-top: 60px;
+        margin-top: -20px;
+        padding-bottom: 40px;
+    }
+
+    @include mq(sp-L) {
+        padding-top: 40px;
+        margin-top: -20px;
+        padding-bottom: 30px;
+    }
+}
+
+.main-body-text {
+    color: $color-blue;
+    text-align: center;
+    font-weight: 500;
+    line-height: 1.8em;
+    font-size: 24px;
+    padding-left: 30px;
+    padding-right: 30px;
+
+    @include mq(pc-M) {
+        font-size: 17px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    @include mq(tab-H) {
+        font-size: 13px;
+    }
+
+    @include mq(tab-M) {
+        font-size: 24px;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    @include mq(sp-H) {
+        font-size: 21px;
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 17px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    @include mq(sp-L) {
+        font-size: 13px;
+    }
+}
+
+//first
+.main-first {
+    background: $color-lightblue;
+}
+
+.main-first-spguest-img {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 480px;
+
+    @include mq(pc-M) {
+        max-width: 360px;
+    }
+
+    @include mq(tab-H) {
+        max-width: 260px;
+    }
+
+    @include mq(tab-M) {
+        max-width: 480px;
+    }
+
+    @include mq(sp-M) {
+        max-width: 360px;
+    }
+
+    @include mq(sp-L) {
+        max-width: 260px;
+    }
+
+}
+
+.main-first-spguest-text {
+    color: $color-blue;
+    line-height: 1.4em;
+    font-weight: 500;
+    font-size: 24px;
+    margin-left: 40px;
+    margin-right: 40px;
+
+    @include mq(pc-M) {
+        font-size: 17px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    @include mq(tab-H) {
+        font-size: 13px;
+    }
+
+    @include mq(tab-M) {
+        font-size: 24px;
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+
+    @include mq(sp-H) {
+        font-size: 20px;
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 17px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    @include mq(sp-L) {
+        font-size: 13px;
+    }
+}
+
+.main-first-guests-title,
+.main-first-timetable-title {
+    font-family: $font-adbe;
+    text-align: center;
+    color: $color-blue;
+    line-height: 1.4em;
+    font-size: 28px;
+    margin-bottom: 28px;
+
+    @include mq(pc-M) {
+        font-size: 20px;
+        margin-bottom: 18px;
+    }
+
+    @include mq(tab-H) {
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
+
+    @include mq(tab-M) {
+        font-size: 28px;
+        margin-bottom: 28px;
+    }
+
+    @include mq(sp-H) {
+        font-size: 23px;
+        margin-bottom: 23px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 20px;
+        margin-bottom: 18px;
+    }
+
+    @include mq(sp-L) {
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
+}
+
+.main-first-guests {
+    margin-top: 45px;
+
+    @include mq(pc-M) {
+        margin-top: 30px;
+    }
+
+    @include mq(tab-H) {
+        margin-top: 20px;
+    }
+    @include mq(tab-M) {
+        margin-top: 45px;
+    }
+
+    @include mq(sp-H) {
+        margin-top: 36px;
+    }
+
+    @include mq(sp-M) {
+        margin-top: 30px;
+    }
+
+    @include mq(sp-L) {
+        margin-top: 20px;
+    }
+}
+
+.main-first-guests-top,
+.main-first-guests-bottom {
+    display: flex;
+    justify-content: space-around;
+}
+
+.main-first-guests-img {
+    flex: 0 0 calc(50% - 50px);
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-bottom: 40px;
+
+    @include mq(pc-M) {
+        flex: 0 0 calc(50% - 30px);
+        margin-left: 15px;
+        margin-right: 15px;
+        margin-bottom: 30px;
+    }
+
+    @include mq(tab-H) {
+        flex: 0 0 calc(50% - 20px);
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 25px;
+    }
+
+    @include mq(tab-M) {
+        flex: 0 0 calc(50% - 50px);
+        margin-left: 25px;
+        margin-right: 25px;
+        margin-bottom: 40px;
+    }
+    @include mq(sp-H) {
+        flex: 0 0 calc(50% - 40px);
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-bottom: 40px;
+    }
+
+    @include mq(sp-M) {
+        flex: 0 0 calc(50% - 30px);
+        margin-left: 15px;
+        margin-right: 15px;
+        margin-bottom: 30px;
+    }
+
+    @include mq(sp-L) {
+        flex: 0 0 calc(50% - 20px);
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 25px;
+    }
+}
+
+.main-first-timetable-img {
+    margin-left: 40px;
+    margin-right: 40px;
+
+    @include mq(pc-M) {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    @include mq(tab-M) {
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+
+    @include mq(sp-H) {
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+
+    @include mq(sp-M) {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+}
+
+// second
+.main-second-images {
+    display: flex;
+    justify-content: center;
+    margin: 30px 40px 40px;
+
+    @include mq(pc-M) {
+        margin: 10px 20px 20px
+    }
+
+    @include mq(tab-M) {
+        margin: 30px 40px 40px;
+    }
+
+    @include mq(sp-H) {
+        margin: 20px 30px 30px;
+    }
+
+    @include mq(sp-M) {
+        margin: 10px 20px 20px
+    }
+}
+
+.main-second-img {
+    height: auto;
+    flex: 0 0 calc(50% - 50px);
+    margin-left: 20px;
+    margin-right: 20px;
+
+    @include mq(pc-M) {
+        flex: 0 0 calc(50% - 30px);
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+
+    @include mq(tab-H) {
+        flex: 0 0 calc(50% - 20px);
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+
+    @include mq(tab-M) {
+        flex: 0 0 calc(50% - 50px);
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    @include mq(sp-H) {
+        flex: 0 0 calc(50% - 40px);
+        margin-left: 16px;
+        margin-right: 16px;
+    }
+
+    @include mq(sp-M) {
+        flex: 0 0 calc(50% - 30px);
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+
+    @include mq(sp-L) {
+        flex: 0 0 calc(50% - 20px);
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+}
+
+//third
+.main-third-img {
+    margin: 1em auto;
+    height: auto;
+    width: 420px;
+
+    @include mq(pc-M) {
+        width: 280px;
+    }
+
+    @include mq(tab-H) {
+        width: 180px;
+    }
+
+    @include mq(tab-M) {
+        width: 420px;
+    }
+
+    @include mq(sp-H) {
+        width: 360px;
+    }
+
+    @include mq(sp-M) {
+        width: 280px;
+    }
+
+    @include mq(sp-L) {
+        width: 180px;
+    }
+}
+
+// fourth
+.main-fourth-img {
+    margin: 0 auto 1em;
+    height: auto;
+    width: 360px;
+
+    @include mq(pc-M) {
+        width: 220px;
+    }
+
+    @include mq(tab-H) {
+        width: 160px;
+    }
+
+    @include mq(tab-M) {
+        width: 360px;
+    }
+
+    @include mq(sp-H) {
+        width: 300px;
+    }
+
+    @include mq(sp-M) {
+        width: 220px;
+    }
+
+    @include mq(sp-L) {
+        width: 160px;
+    }
+}
+
+// seventh
+.main-seventh-body {
+    color: $color-blue;
+    font-weight: 500;
+    line-height: 1.6em;
+    font-size: 22px;
+    padding-left: 40px;
+    padding-right: 40px;
+
+    @include mq(pc-M) {
+        font-size: 16px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    @include mq(tab-H) {
+        font-size: 14px;
+    }
+
+    @include mq(tab-M) {
+        font-size: 22px;
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    @include mq(sp-H) {
+        font-size: 18px;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 16px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    @include mq(sp-L) {
+        font-size: 14px;
+    }
+}
+
+.main-seventh-text-top {
+    border-bottom: 2px solid $color-blue;
+    padding-bottom: 50px;
+    margin-bottom: 40px;
+
+    @include mq(pc-M) {
+        padding-bottom: 30px;
+        margin-bottom: 25px;
+    }
+
+    @include mq(tab-H) {
+        padding-bottom: 25px;
+        margin-bottom: 20px;
+    }
+
+    @include mq(tab-M) {
+        padding-bottom: 50px;
+        margin-bottom: 40px;
+    }
+
+    @include mq(sp-H) {
+        padding-bottom: 40px;
+        margin-bottom: 30px;
+    }
+
+    @include mq(sp-M) {
+        padding-bottom: 30px;
+        margin-bottom: 25px;
+    }
+
+    @include mq(sp-L) {
+        padding-bottom: 25px;
+        margin-bottom: 20px;
+    }
+}
+
+.main-seventh-text-bottom {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    font-size: 20px;
+
+    @include mq(pc-M) {
+        font-size: 14px;
+    }
+    
+    @include mq(tab-H) {
+        font-size: 10px;
+    }
+
+    @include mq(tab-M) {
+        font-size: 20px;
+    }
+
+    @include mq(sp-H) {
+        font-size: 18px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 14px;
+    }
+    
+    @include mq(sp-L) {
+        font-size: 10px;
+    }
+}
+
+// about
+.section__about {
+    background: $color-sky;
+    padding-top: 80px;
+    padding-bottom: 200px;
+
+    @include mq(pc-M) {
+        padding-top: 45px;
+        padding-bottom: 80px;
+    }
+
+    @include mq(tab-M) {
+        padding-top: 80px;
+        padding-bottom: 200px;
+    }
+
+    @include mq(sp-H) {
+        padding-top: 60px;
+        padding-bottom: 140px;
+    }
+
+    @include mq(sp-M) {
+        padding-top: 45px;
+        padding-bottom: 80px;
+    }
+}
+
+.section__about-title {
+    margin-left: auto;
+    margin-right: auto;
+    width: 460px;
+
+    @include mq(pc-M) {
+        width: 300px;
+    }
+
+    @include mq(tab-H) {
+        width: 275px;
+    }
+
+    @include mq(tab-M) {
+        width: 460px;
+    }
+
+    @include mq(sp-H) {
+        width: 360px;
+    }
+
+    @include mq(sp-M) {
+        width: 300px;
+    }
+
+    @include mq(sp-L) {
+        width: 275px;
+    }
+}
+
+.about-text {
+    line-height: 1.6em;
+    font-weight: 400;
+    font-size: 24px;
+    margin: 50px 40px;
+
+    @include mq(pc-M) {
+        font-size: 17px;
+        margin: 30px 20px;
+    }
+
+    @include mq(tab-H) {
+        font-size: 13px;
+    }
+
+    @include mq(tab-M) {
+        font-size: 24px;
+        margin: 50px 40px;
+    }
+
+    @include mq(sp-H) {
+        font-size: 20px;
+        margin: 40px 30px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 17px;
+        margin: 30px 20px;
+    }
+
+    @include mq(sp-L) {
+        font-size: 13px;
+    }
+}
+
+.swiper-wrapper {
+    transition-timing-function: linear !important;
+}
+
+.swiper-slide,
+.swiper-item {
+    border-radius: 20px;
+    flex: 0 0 300px;
+    height: 300px;
+    margin-left: 25px;
+
+    @include mq(pc-M) {
+        flex: 0 0 180px;
+        height: 180px;
+        margin-left: 15px;
+    }
+
+    @include mq(tab-H) {
+        flex: 0 0 150px;
+        height: 150px;
+        margin-left: 10px;
+    }
+
+    @include mq(tab-M) {
+        flex: 0 0 300px;
+        height: 300px;
+        margin-left: 25px;
+    }
+
+    @include mq(sp-H) {
+        flex: 0 0 240px;
+        height: 240px;
+        margin-left: 20px;
+    }
+
+    @include mq(sp-M) {
+        flex: 0 0 180px;
+        height: 180px;
+        margin-left: 15px;
+    }
+
+    @include mq(sp-L) {
+        flex: 0 0 150px;
+        height: 150px;
+        margin-left: 10px;
+    }
+
+    img {
+        border-radius: 20px;
+    }
+}
+
+// overview
+.section__overview {
+    position: relative;
+    background: $color-blue;
+    padding-bottom: 140px;
+
+    @include mq(pc-M) {
+        padding-bottom: 40px;
+    }
+
+    @include mq(tab-M) {
+        padding-bottom: 140px;
+    }
+
+    @include mq(sp-H) {
+        padding-bottom: 80px;
+    }
+
+    @include mq(sp-M) {
+        padding-bottom: 40px;
+    }
+}
+
+.overview-bg {
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    top: -120px;
+
+    @include mq(pc-M) {
+        top: -60px;
+    }
+
+    @include mq(tab-M) {
+        top: -120px;
+    }
+
+    @include mq(sp-H) {
+        top: -100px;
+    }
+
+    @include mq(sp-M) {
+        top: -60px;
+    }
+}
+
+.section__overview-title {
+    position: relative;
+    z-index: 3;
+    width: 460px;
+
+    @include mq(pc-M) {
+        margin-top: 40px;
+        width: calc(100% - 120px);
+        max-width: 360px;
+    }
+
+    @include mq(tab-H) {
+        margin-top: 25px;
+        width: calc(100% - 80px);
+        min-width: 200px;
+    }
+
+    @include mq(tab-M) {
+        width: 460px;
+    }
+
+    @include mq(sp-H) {
+        margin-top: 60px;
+        width: 420px;
+    }
+
+    @include mq(sp-M) {
+        margin-top: 40px;
+        width: calc(100% - 120px);
+        max-width: 360px;
+    }
+
+    @include mq(sp-L) {
+        margin-top: 25px;
+        width: calc(100% - 80px);
+        min-width: 200px;
+    }
+}
+
+.overview-text {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    line-height: 1.8em;
+    margin-top: 40px;
+    font-size: 30px;
+
+    @include mq(pc-M) {
+        margin-top: 30px;
+        font-size: 22px;
+    }
+
+    @include mq(tab-H) {
+        margin-top: 20px;
+        font-size: 18px;
+    }
+
+    @include mq(tab-M) {
+        margin-top: 40px;
+        font-size: 30px;
+    }
+
+    @include mq(sp-H) {
+        margin-top: 36px;
+        font-size: 25px;
+    }
+
+    @include mq(sp-M) {
+        margin-top: 30px;
+        font-size: 22px;
+    }
+
+    @include mq(sp-L) {
+        margin-top: 20px;
+        font-size: 18px;
+    }
+}
+
+.overview-title {
+    font-family: $font-adbe;
+    color: #FFF;
+}
+
+.overview-lead {
+    color: $color-yellow;
+}
+
+.overview-sponsor {
+    background: #FFF;
+    text-align: center;
+    margin: 50px 40px 40px;
+    padding: 50px 40px 60px;
+
+    @include mq(pc-M) {
+        margin: 30px 25px 30px;
+        padding: 30px 25px 40px;
+    }
+
+    @include mq(tab-H) {
+        margin: 25px 20px;
+        padding: 25px 20px 40px;
+    }
+
+    @include mq(tab-M) {
+        margin: 50px 40px 40px;
+        padding: 50px 40px 60px;
+    }
+
+    @include mq(sp-H) {
+        margin: 40px 30px 30px;
+        padding: 40px 30px 50px;
+    }
+
+    @include mq(sp-M) {
+        margin: 30px 25px 30px;
+        padding: 30px 25px 40px;
+    }
+
+    @include mq(sp-L) {
+        margin: 25px 20px;
+        padding: 25px 20px 40px;
+    }
+}
+
+.sponsor-title {
+    line-height: 1.6em;
+    font-weight: 500;
+    font-size: 28px;
+
+    @include mq(pc-M) {
+        font-size: 20px;
+    }
+
+    @include mq(tab-H) {
+        font-size: 16px;
+    }
+
+    @include mq(tab-M) {
+        font-size: 28px;
+    }
+
+    @include mq(sp-H) {
+        font-size: 24px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 20px;
+    }
+
+    @include mq(sp-L) {
+        font-size: 16px;
+    }
+}
+
+.sponsor-img {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 40px;
+
+    @include mq(pc-M) {
+        margin-top: 5px;
+        margin-bottom: 30px;
+    }
+
+    @include mq(tab-M) {
+        margin-top: 10px;
+        margin-bottom: 40px;
+    }
+
+    @include mq(sp-M) {
+        margin-top: 5px;
+        margin-bottom: 30px;
+    }
+}
+
+.sponsor-img-tsuribito {
+    width: 80%;
+    max-width: 420px;
+
+    @include mq(pc-M) {
+        max-width: 300px;
+    }
+
+    @include mq(tab-H) {
+        max-width: 250px;
+    }
+
+    @include mq(tab-M) {
+        max-width: 420px;
+    }
+
+    @include mq(sp-H) {
+        max-width: 360px;
+    }
+
+    @include mq(sp-M) {
+        max-width: 300px;
+    }
+
+    @include mq(sp-L) {
+        max-width: 250px;
+    }
+}
+
+.sponsor-img-umito {
+    width: 60%;
+    max-width: 340px;
+
+    @include mq(pc-M) {
+        max-width: 240px;
+    }
+
+    @include mq(tab-H) {
+        max-width: 200px;
+    }
+
+    @include mq(tab-M) {
+        max-width: 340px;
+    }
+
+    @include mq(sp-H) {
+        max-width: 280px;
+    }
+
+    @include mq(sp-M) {
+        max-width: 240px;
+    }
+
+    @include mq(sp-L) {
+        max-width: 200px;
+    }
+}
+
+.sponsor-text {
+    color: $color-blue;
+    border-bottom: 1px dotted $color-blue;
+    line-height: 1.6em;
+    font-weight: 500;
+    font-size: 28px;
+    padding-top: 30px;
+    padding-bottom: 45px;
+
+    @include mq(pc-M) {
+        font-size: 20px;
+        padding-top: 15px;
+        padding-bottom: 30px;
+    }
+
+    @include mq(tab-H) {
+        font-size: 16px;
+        padding-top: 10px;
+        padding-bottom: 25px;
+    }
+
+    @include mq(tab-M) {
+        font-size: 28px;
+        padding-top: 30px;
+        padding-bottom: 45px;
+    }
+
+    @include mq(sp-H) {
+        font-size: 24px;
+        padding-top: 25px;
+        padding-bottom: 40px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 20px;
+        padding-top: 15px;
+        padding-bottom: 30px;
+    }
+
+    @include mq(sp-L) {
+        font-size: 16px;
+        padding-top: 10px;
+        padding-bottom: 25px;
+    }
+}
+
+.sponsor-bottom {
+    margin-top: 45px;
+
+    @include mq(pc-M) {
+        margin-top: 30px;
+    }
+
+    @include mq(tab-M) {
+        margin-top: 45px;
+    }
+
+    @include mq(sp-M) {
+        margin-top: 30px;
+    }
+}
+
+.sponsor-bottom-first {
+    width: 80%;
+    max-width: 400px;
+
+    @include mq(pc-M) {
+        max-width: 300px;
+    }
+
+    @include mq(tab-H) {
+        max-width: 265px;
+    }
+
+    @include mq(tab-M) {
+        max-width: 400px;
+    }
+
+    @include mq(sp-H) {
+        max-width: 340px;
+    }
+
+    @include mq(sp-M) {
+        max-width: 300px;
+    }
+
+    @include mq(sp-L) {
+        max-width: 265px;
+    }
+}
+
+.sponsor-bottom-second {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 60px;
+
+    @include mq(pc-M) {
+        margin-bottom: 40px;
+    }
+
+    @include mq(tab-H) {
+        margin-bottom: 35px;
+    }
+
+    @include mq(tab-M) {
+        margin-bottom: 60px;
+    }
+
+    @include mq(sp-H) {
+        margin-bottom: 50px;
+    }
+
+    @include mq(sp-M) {
+        margin-bottom: 40px;
+    }
+
+    @include mq(sp-L) {
+        margin-bottom: 35px;
+    }
+}
+
+.sponsor-second-left,
+.sponsor-second-right {
+    flex: 0 0 45%;
+    height: auto;
+
+    img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        max-height: 60px;
+
+        @include mq(pc-M) {
+            max-height: 32px;
+        }
+
+        @include mq(tab-M) {
+            max-height: 60px;
+        }
+
+        @include mq(sp-H) {
+            max-height: 45px;
+        }
+
+        @include mq(sp-M) {
+            max-height: 32px;
+        }
+    }
+}
+
+.sponsor-bottom-third {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 50px;
+
+    @include mq(tab-H) {
+        margin-top: 30px;
+    }
+
+    @include mq(tab-M) {
+        margin-bottom: 50px;
+    }
+
+    @include mq(sp-H) {
+        margin-bottom: 40px;
+    }
+
+    @include mq(sp-L) {
+        margin-top: 30px;
+    }
+}
+
+.sponsor-third-left, 
+.sponsor-third-center, 
+.sponsor-third-right {
+    flex: 0 0 30%;
+    height: auto;
+
+    img {
+        width: 100%;
+        height: auto;
+        object-fit: contain;
+        max-height: 48px;
+
+        @include mq(pc-M) {
+            max-height: 30px;
+        }
+
+        @include mq(tab-M) {
+            max-height: 48px;
+        }
+
+        @include mq(sp-H) {
+            max-height: 36px;
+        }
+
+        @include mq(sp-M) {
+            max-height: 30px;
+        }
+    }
+}
+
+//access
+.section__access {
+    position: relative;
+    background: $color-red;
+    padding-bottom: 60px;
+
+    @include mq(pc-M) {
+        padding-bottom: 20px;
+    }
+
+    @include mq(tab-M) {
+        padding-bottom: 60px;
+    }
+
+    @include mq(sp-H) {
+        padding-bottom: 40px;
+    }
+
+    @include mq(sp-M) {
+        padding-bottom: 20px;
+    }
+}
+
+.access-bg {
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    top: -100px;
+
+    @include mq(pc-M) {
+        top: -60px;
+    }
+
+    @include mq(tab-M) {
+        top: -100px;
+    }
+
+    @include mq(sp-H) {
+        top: -80px;
+    }
+
+    @include mq(sp-M) {
+        top: -60px;
+    }
+}
+
+.access-content {
+    position: relative;
+    z-index: 2;
+    background: #fff;
+    padding-top: 80px;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-top: -30px;
+
+    @include mq(pc-M) {
+        padding-top: 60px;
+        margin-left: 25px;
+        margin-right: 25px;
+        margin-top: -20px;
+    }
+    
+    @include mq(tab-H) {
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-top: -15px;
+    }
+
+    @include mq(tab-M) {
+        padding-top: 80px;
+        margin-left: 40px;
+        margin-right: 40px;
+        margin-top: -30px;
+    }
+
+    @include mq(sp-H) {
+        margin-left: 30px;
+        margin-right: 30px;
+        margin-top: -25px;
+    }
+
+    @include mq(sp-M) {
+        padding-top: 60px;
+        margin-left: 25px;
+        margin-right: 25px;
+        margin-top: -20px;
+    }
+    
+    @include mq(sp-L) {
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-top: -15px;
+    }
+}
+
+.access-top {
+    display: flex;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-bottom: 60px;
+
+    @include mq(pc-M) {
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-bottom: 50px;
+    }
+
+    @include mq(tab-M) {
+        margin-left: 30px;
+        margin-right: 30px;
+        margin-bottom: 60px;
+    }
+
+    @include mq(sp-H) {
+        margin-left: 25px;
+        margin-right: 25px;
+        margin-bottom: 50px;
+    }
+
+    @include mq(sp-M) {
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-bottom: 50px;
+    }
+}
+
+.access-top-left {
+    height: auto;
+    flex: 0 0 48px;
+
+    @include mq(pc-M) {
+        flex: 0 0 36px;
+    }
+
+    @include mq(tab-H) {
+        flex: 0 0 28px;
+    }
+
+    @include mq(tab-M) {
+        flex: 0 0 48px;
+    }
+
+    @include mq(sp-H) {
+        flex: 0 0 42px;
+    }
+
+    @include mq(sp-M) {
+        flex: 0 0 36px;
+    }
+
+    @include mq(sp-L) {
+        flex: 0 0 28px;
+    }
+
+    img {
+        object-fit: contain;
+    }
+}
+
+.access-top-right {
+    color: $color-blue;
+    font-weight: 500;
+    line-height: 1.4em;
+    font-size: 28px;
+    margin-left: 10px;
+
+    @include mq(pc-M) {
+        font-size: 20px;
+    }
+
+    @include mq(tab-H) {
+        margin-left: 5px;
+        font-size: 16px;
+    }
+
+    @include mq(tab-M) {
+        font-size: 28px;
+        margin-left: 10px;
+    }
+
+    @include mq(sp-H) {
+        font-size: 24px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 20px;
+    }
+
+    @include mq(sp-L) {
+        margin-left: 5px;
+        font-size: 16px;
+    }
+}
+
+.access-top-right-link {
+    text-decoration-line: underline;
+    font-size: 24px;
+
+    @include mq(pc-M) {
+        font-size: 16px;
+    }
+
+    @include mq(tab-H) {
+        font-size: 12px;
+    }
+
+    @include mq(tab-M) {
+        font-size: 24px;
+    }
+
+    @include mq(sp-H) {
+        font-size: 20px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 16px;
+    }
+
+    @include mq(sp-L) {
+        font-size: 12px;
+    }
+}
+
+.access-bus {
+    margin-left: 30px;
+    margin-right: 30px;
+
+    @include mq(pc-M) {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    @include mq(tab-M) {
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+
+    @include mq(sp-H) {
+        margin-left: 25px;
+        margin-right: 25px;
+    }
+
+    @include mq(sp-M) {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+}
+
+.access-bus-top-title {
+    text-align: center;
+    font-family: $font-adbe;
+    font-size: 32px;
+    margin-bottom: 34px;
+
+    @include mq(pc-M) {
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+    @include mq(tab-H) {
+        font-size: 20px;
+        margin-bottom: 25px;
+    }
+
+    @include mq(tab-M) {
+        font-size: 32px;
+        margin-bottom: 34px;
+    }
+
+    @include mq(sp-H) {
+        font-size: 28px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+    @include mq(sp-L) {
+        font-size: 20px;
+        margin-bottom: 25px;
+    }
+}
+
+.access-bus-top-text {
+    line-height: 1.6em;
+    font-weight: 500;
+    font-size: 28px;
+
+    @include mq(pc-M) {
+        font-size: 20px;
+    }
+
+    @include mq(tab-H) {
+        font-size: 17px;
+    }
+
+    @include mq(tab-M) {
+        font-size: 28px;
+    }
+
+    @include mq(sp-H) {
+        font-size: 24px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 20px;
+    }
+
+    @include mq(sp-L) {
+        font-size: 17px;
+    }
+}
+
+.access-bus-top-text-underline {
+    text-decoration-line: underline;
+    text-decoration-style: wavy;
+}
+
+.access-bus-top-warning {
+    line-height: 1.6em;
+    letter-spacing: 0.1em;
+    font-weight: 400;
+    font-size: 24px;
+
+    @include mq(pc-M) {
+        font-size: 17px;
+    }
+
+    @include mq(tab-H) {
+        font-size: 14px;
+    }
+
+    @include mq(tab-M) {
+        font-size: 24px;
+    }
+
+    @include mq(sp-H) {
+        font-size: 20px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 17px;
+    }
+
+    @include mq(sp-L) {
+        font-size: 14px;
+    }
+}
+
+.access-bus-spots {
+    margin-top: 40px;
+    margin-bottom: 60px;
+
+    @include mq(tab-H) {
+        margin-top: 20px;
+        margin-bottom: 40px;
+    }
+    @include mq(tab-M) {
+        margin-top: 40px;
+        margin-bottom: 60px;
+    }
+
+    @include mq(sp-H) {
+        margin-top: 30px;
+        margin-bottom: 50px;
+    }
+
+    @include mq(sp-L) {
+        margin-top: 20px;
+        margin-bottom: 40px;
+    }
+}
+
+.access-bus-spot {
+    display: flex;
+    margin-bottom: 25px;
+}
+
+.access-bus-spot-left {
+    height: auto;
+    flex: 0 0 48px;
+
+    @include mq(pc-M) {
+        flex: 0 0 36px;
+    }
+
+    @include mq(tab-H) {
+        flex: 0 0 28px;
+    }
+
+    @include mq(tab-M) {
+        flex: 0 0 48px;
+    }
+
+    @include mq(sp-H) {
+        flex: 0 0 42px;
+    }
+
+    @include mq(sp-M) {
+        flex: 0 0 36px;
+    }
+
+    @include mq(sp-L) {
+        flex: 0 0 28px;
+    }
+
+    img {
+        object-fit: contain;
+    }
+}
+
+.access-bus-spot-right {
+    font-weight: 500;
+    line-height: 1.4em;
+    font-size: 28px;
+    margin-left: 10px;
+
+    @include mq(pc-M) {
+        font-size: 20px;
+    }
+
+    @include mq(tab-H) {
+        margin-left: 5px;
+        font-size: 16px;
+    }
+
+    @include mq(tab-M) {
+        font-size: 28px;
+        margin-left: 10px;
+    }
+
+    @include mq(sp-H) {
+        font-size: 24px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 20px;
+    }
+
+    @include mq(sp-L) {
+        margin-left: 5px;
+        font-size: 16px;
+    }
+}
+
+.access-bus-spot-right-link {
+    text-decoration-line: underline;
+    font-size: 24px;
+
+    @include mq(pc-M) {
+        font-size: 16px;
+    }
+
+    @include mq(tab-H) {
+        font-size: 12px;
+    }
+
+    @include mq(tab-M) {
+        font-size: 24px;
+    }
+
+    @include mq(sp-H) {
+        font-size: 20px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 16px;
+    }
+
+    @include mq(sp-L) {
+        font-size: 12px;
+    }
+}
+
+.access-bus-middle-text {
+    line-height: 1.6em;
+    font-weight: 500;
+    border-bottom: 1px dotted $color-blue;
+    font-size: 28px;
+    padding-bottom: 50px;
+
+    @include mq(pc-M) {
+        font-size: 20px;
+        padding-bottom: 30px;
+    }
+
+    @include mq(tab-H) {
+        font-size: 17px;
+        padding-bottom: 25px;
+    }
+
+    @include mq(tab-M) {
+        font-size: 28px;
+        padding-bottom: 50px;
+    }
+
+    @include mq(sp-H) {
+        font-size: 24px;
+        padding-bottom: 40px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 20px;
+        padding-bottom: 30px;
+    }
+
+    @include mq(sp-L) {
+        font-size: 17px;
+        padding-bottom: 25px;
+    }
+}
+
+.access-bottom {
+    margin-top: 60px;
+    margin-left: 40px;
+    margin-right: 40px;
+    padding-bottom: 60px;
+    font-size: 26px;
+
+    @include mq(pc-M) {
+        margin-top: 45px;
+        margin-left: 25px;
+        margin-right: 25px;
+        padding-bottom: 40px;
+        font-size: 18px;
+    }
+
+    @include mq(tab-H) {
+        margin-left: 20px;
+        margin-right: 20px;
+        font-size: 15px;
+    }
+
+    @include mq(tab-M) {
+        margin-top: 60px;
+        margin-left: 40px;
+        margin-right: 40px;
+        padding-bottom: 60px;
+        font-size: 26px;
+    }
+
+    @include mq(sp-H) {
+        margin-top: 60px;
+        margin-left: 30px;
+        margin-right: 30px;
+        padding-bottom: 60px;
+        font-size: 22px;
+    }
+
+    @include mq(sp-M) {
+        margin-top: 45px;
+        margin-left: 25px;
+        margin-right: 25px;
+        padding-bottom: 40px;
+        font-size: 18px;
+    }
+
+    @include mq(sp-L) {
+        margin-left: 20px;
+        margin-right: 20px;
+        font-size: 15px;
+    }
+}
+
+.access-bottom-title {
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 40px;
+
+    @include mq(pc-M) {
+        font-size: 20px;
+    }
+
+    @include mq(tab-H) {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    @include mq(tab-M) {
+        font-size: 28px;
+        margin-bottom: 40px;
+    }
+
+    @include mq(sp-H) {
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 20px;
+    }
+
+    @include mq(sp-L) {
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+}
+
+.access-bottom-text {
+    line-height: 1.6em;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+
+}
+
+.access-bottom-link {
+    margin-top: 0.2em;
+    text-decoration-line: underline;
+}
+
+
+// footer
+.footer-top {
+    background: #fff;
+    text-align: center;
+    padding-top: 120px;
+    padding-bottom: 70px;
+
+    @include mq(pc-M) {
+        padding-top: 80px;
+        padding-bottom: 45px;
+    }
+
+    @include mq(tab-H) {
+        padding-top: 60px;
+        padding-bottom: 35px;
+    }
+
+    @include mq(tab-M) {
+        padding-top: 120px;
+        padding-bottom: 70px;
+    }
+
+    @include mq(sp-H) {
+        padding-top: 100px;
+        padding-bottom: 60px;
+    }
+
+    @include mq(sp-M) {
+        padding-top: 80px;
+        padding-bottom: 45px;
+    }
+
+    @include mq(sp-L) {
+        padding-top: 60px;
+        padding-bottom: 35px;
+    }
+}
+
+.footer-image {
+    margin-left: auto;
+    margin-right: auto;
+    width: 480px;
+    margin-bottom: 60px;
+
+    @include mq(pc-M) {
+        width: 300px;
+        margin-bottom: 40px;
+    }
+
+    @include mq(tab-H) {
+        width: 200px;
+        margin-bottom: 25px;
+    }
+
+    @include mq(tab-M) {
+        width: 480px;
+        margin-bottom: 60px;
+    }
+
+    @include mq(sp-H) {
+        width: 380px;
+        margin-bottom: 48px;
+    }
+
+    @include mq(sp-M) {
+        width: 300px;
+        margin-bottom: 40px;
+    }
+
+    @include mq(sp-L) {
+        width: 200px;
+        margin-bottom: 25px;
+    }
+}
+
+.footer-info {
+    font-weight: 500;
+}
+
+.footer-info-title,
+.footer-info-address {
+    line-height: 1.6em;
+    font-size: 24px;
+
+    @include mq(pc-M) {
+        font-size: 17px;
+    }
+
+    @include mq(tab-H) {
+        font-size: 14px;
+    }
+
+    @include mq(tab-M) {
+        font-size: 24px;
+    }
+
+    @include mq(sp-H) {
+        font-size: 20px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 17px;
+    }
+
+    @include mq(sp-L) {
+        font-size: 14px;
+    }
+}
+
+.footer-info-name {
+    line-height: 1.6em;
+    font-size: 28px;
+
+    @include mq(pc-M) {
+        font-size: 20px;
+    }
+
+    @include mq(tab-H) {
+        font-size: 17px;
+    }
+
+    @include mq(tab-M) {
+        font-size: 28px;
+    }
+
+    @include mq(sp-H) {
+        font-size: 24px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 20px;
+    }
+
+    @include mq(sp-L) {
+        font-size: 17px;
+    }
+}
+
+.footer-bottom {
+    background: $color-blue;
+    text-align: center;
+    color: #FFF;
+    line-height: 1.6em;
+    padding-top: 60px;
+    padding-bottom: 140px;
+
+    @include mq(pc-M) {
+        padding-top: 30px;
+        padding-bottom: 100px;
+    }
+
+    @include mq(tab-H) {
+        padding-top: 20px;
+        padding-bottom: 80px;
+    }
+
+    @include mq(tab-M) {
+        padding-top: 60px;
+        padding-bottom: 140px;
+    }
+
+    @include mq(sp-H) {
+        padding-top: 40px;
+        padding-bottom: 120px;
+    }
+
+    @include mq(sp-M) {
+        padding-top: 30px;
+        padding-bottom: 100px;
+    }
+
+    @include mq(sp-L) {
+        padding-top: 20px;
+        padding-bottom: 80px;
+    }
+}
+
+.footer-bottom-text {
+    font-family: $font-adbe;
+    font-size: 28px;
+
+    @include mq(pc-M) {
+        font-size: 20px;
+    }
+
+    @include mq(tab-H) {
+        font-size: 18px;
+    }
+    @include mq(tab-M) {
+        font-size: 28px;
+    }
+
+    @include mq(sp-H) {
+        font-size: 24px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 20px;
+    }
+
+    @include mq(sp-L) {
+        font-size: 18px;
+    }
+}
+
+.footer-bottom-sns {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 60px;
+
+    @include mq(pc-M) {
+        margin-top: 10px;
+        margin-bottom: 25px;
+    }
+
+    @include mq(tab-H) {
+        margin-top: 5px;
+        margin-bottom: 15px;
+    }
+
+    @include mq(tab-M) {
+        margin-top: 30px;
+        margin-bottom: 60px;
+    }
+    
+    @include mq(sp-H) {
+        margin-top: 20px;
+        margin-bottom: 40px;
+    }
+    
+    @include mq(sp-M) {
+        margin-top: 10px;
+        margin-bottom: 25px;
+    }
+
+    @include mq(sp-L) {
+        margin-top: 5px;
+        margin-bottom: 15px;
+    }
+}
+
+.footer-bottom-fb,
+.footer-bottom-x {
+    width: 46px;
+    height: 46px;
+    font-size: 42px;
+    line-height: 46px;
+
+    @include mq(pc-M) {
+        font-size: 30px;
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
+    }
+
+    @include mq(tab-H) {
+        font-size: 22px;
+        width: 26px;
+        height: 26px;
+        line-height: 26px;
+    }
+
+    @include mq(tab-M) {
+        width: 46px;
+        height: 46px;
+        font-size: 42px;
+        line-height: 46px;
+    }
+
+    @include mq(sp-H) {
+        font-size: 35px;
+        width: 38px;
+        height: 38px;
+        line-height: 36px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 30px;
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
+    }
+
+    @include mq(sp-L) {
+        font-size: 22px;
+        width: 26px;
+        height: 26px;
+        line-height: 26px;
+    }
+}
+
+.footer-bottom-x {
+    margin-left: 40px;
+    margin-right: 40px;
+
+    @include mq(pc-M) {
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+
+    @include mq(tab-M) {
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+
+    @include mq(sp-M) {
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+}
+
+.footer-bottom-line {
+    width: 46px;
+    height: 46px;
+
+    @include mq(pc-M) {
+        width: 32px;
+        height: 32px;
+    }
+
+    @include mq(tab-H) {
+        width: 26px;
+        height: 26px;
+    }
+    @include mq(tab-M) {
+        width: 46px;
+        height: 46px;
+    }
+
+    @include mq(sp-H) {
+        width: 38px;
+        height: 38px;
+    }
+
+    @include mq(sp-M) {
+        width: 32px;
+        height: 32px;
+    }
+
+    @include mq(sp-L) {
+        width: 26px;
+        height: 26px;
+    }
+}
+
+
+.footer-bottom-copy {
+    font-weight: 200;
+    font-size: 20px;
+
+    @include mq(pc-M) {
+        font-size: 14px;
+    }
+
+    @include mq(tab-H) {
+        font-size: 10px;
+    }
+        
+    @include mq(tab-M) {
+        font-size: 20px;
+    }
+
+    @include mq(sp-H) {
+        font-size: 17px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 14px;
+    }
+
+    @include mq(sp-L) {
+        font-size: 10px;
+    }
+}
+
+.hp-body-bottom {
+    width: 100%;
+    color: $color-blue;
+    background: $color-yellow;
+    display: flex;
+    justify-content: center;
+    line-height: 1.6em;
+    align-items: center;
+    border-radius: 30px 30px 0 0 ;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 10;
+    width: 700px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 28px;
+    height: 100px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    @include mq(pc-M) {
+        font-size: 20px;
+        height: 75px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        width: 560px;
+    }
+
+    @include mq(tab-H) {
+        font-size: 18px;
+        height: 60px;
+        width: 400px;
+    }
+
+    @include mq(tab-M) {
+        width: 700px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 28px;
+        height: 100px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    @include mq(sp-H) {
+        font-size: 24px;
+        width: 100%;
+        height: 90px;
+    }
+
+    @include mq(sp-M) {
+        font-size: 20px;
+        height: 75px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    @include mq(sp-L) {
+        font-size: 18px;
+        height: 60px;
+    }
+}
+
+.hp-body-bottom-logo {
+    flex: 0 0 64px;
+    margin-right: 20px;
+
+    @include mq(pc-M) {
+        flex: 0 0 42px;
+        margin-right: 10px;
+    }
+
+    @include mq(tab-H) {
+        flex: 0 0 28px;
+    }
+
+    @include mq(tab-M) {
+        flex: 0 0 64px;
+        margin-right: 20px;
+    }
+
+    @include mq(sp-H) {
+        flex: 0 0 50px;
+        margin-right: 15px;
+    }
+
+    @include mq(sp-M) {
+        flex: 0 0 42px;
+        margin-right: 10px;
+    }
+
+    @include mq(sp-L) {
+        flex: 0 0 28px;
+    }
+}
+
+
+//js用
+
+// ふわっと出現
+/* JS有効時だけアニメ準備（JS無効なら通常表示） */
+.js-enabled .js-animate {
+  opacity: 0.15;
+  transform: translateY(30px);
+
+  /* transitionはここに置く（確実に動く） */
+  transition:
+    opacity 1400ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1400ms cubic-bezier(0.22, 1, 0.36, 1);
+    
+  transition-delay: var(--delay, 0ms); /* ← これを追加 */
+  will-change: opacity, transform;
+}
+
+/* 表示されたら最終状態へ */
+.js-enabled .js-animate.is-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 動きを減らす設定の人にはアニメしない */
+@media (prefers-reduced-motion: reduce) {
+  .js-enabled .js-animate,
+  .js-enabled .js-animate.is-in {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+// 回転
+@keyframes rotate720 {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(720deg); }
+}
+
+.lead-gear {
+  transform-origin: 50% 50%;
+}
+
+/* 表示されたら回転 */
+.js-rotate.is-rotating .lead-gear {
+  animation: rotate720 100s linear 1 both;
+}
+
+//girlをふわっと持ち上げる
+@keyframes girlLiftZoom {
+  from {
+    opacity: 0.15;
+    transform: translateY(30px) scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.girl-anim {
+  transform-origin: center bottom;
+  will-change: opacity, transform;
+}
+
+/* JSが有効なときだけ、最初から“小さく・下に・薄く”で待機 */
+.js-enabled .girl-anim {
+  opacity: 0.25;
+  transform: translateY(30px) scale(0.6);
+}
+
+/* 再生（is-playが付いたらアニメする） */
+.js-enabled .girl-anim.is-play {
+  animation: girlLiftZoom 1400ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* 動きを減らす設定の人にはアニメしない（girl版） */
+@media (prefers-reduced-motion: reduce) {
+  .js-enabled .girl-anim,
+  .js-enabled .girl-anim.is-play {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+
+
+
+
+
+
